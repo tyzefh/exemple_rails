@@ -17,4 +17,9 @@ class PagesController < ApplicationController
     @base_title="Exemple - Tutoriel Ruby On Rails"
   end
   
+  def help
+    @titre="Aide"
+    @base_title="Exemple - Tutoriel Ruby On Rails"
+  end
+  
 end
