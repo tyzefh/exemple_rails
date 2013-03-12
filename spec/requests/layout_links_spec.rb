@@ -8,6 +8,20 @@ describe "LayoutLinks" do
 #  response.should have_selector('title', :content => "Accueil")
 #end
 
+  it "devrait avoir le bon lien sur le layout" do
+    visit root_path
+    click_link "A propos"
+    response.should have_selector('title', :content => "A propos")
+    click_link "Aide"
+    response.should have_selector('title', :content => "Aide")
+    click_link "Contact"
+    response.should have_selector('title', :content => "Contact")
+    #click_link "Acceuil"
+    #response.should have_selector('title', :content => "Acceuil")
+    #click_link "S'inscrire !"
+    #response.should have_selector('title', :content => "Inscription")
+  end
+
   it "devrait trouver une page Contact a '/contact'" do
     get '/contact'
     response.should have_selector('title', :content => "Contact")
