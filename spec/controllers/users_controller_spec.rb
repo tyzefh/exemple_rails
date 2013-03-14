@@ -42,13 +42,13 @@ describe UsersController do
       get :show, :id => @user
       assigns(:user).should == @user
     end
-    
+
     it "devrait avoir une image de profil" do
       get :show, :id => @user
       response.should have_selector("h1>img", :class => "gravatar")
     end
   end
-  
+
   describe "POST 'create'" do
 
     describe "Echec" do
@@ -74,7 +74,7 @@ describe UsersController do
         response.should render_template('new')
       end
     end
-    
+
     describe "succes" do
 
       before(:each) do
@@ -92,13 +92,18 @@ describe UsersController do
         post :create, :user => @attr
         response.should redirect_to(user_path(assigns(:user)))
       end
-      
+
       it "devrait avoir un message de bienvenue" do
         post :create, :user => @attr
         flash[:success].should =~ /Bienvenue dans l'Application Exemple/i
-      end    
+      end
+
+      it "devrait identifier l'utilisateur" do
+        post :create, :user => @attr
+        controller.should be_signed_in
+      end
     end
-    
+
   end
 
 end
