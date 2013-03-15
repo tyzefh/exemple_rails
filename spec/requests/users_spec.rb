@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe "Users" do
-  
+
   describe "une inscription" do
 
     describe "ratee" do
@@ -20,9 +20,9 @@ describe "Users" do
         end.should_not change(User, :count)
       end
     end
-    
+
     describe "reussie" do
-      
+
       it "devrait creer un nouvel utilisateur" do
         lambda do
           visit signup_path
@@ -38,13 +38,12 @@ describe "Users" do
       end
     end
   end
-  
-  describe "l'échec" do
+
+  describe "Identification" do
+    describe "l'échec" do
       it "ne devrait pas identifier l'utilisateur" do
-        visit signin_path
-        fill_in "Email",    :with => ""
-        fill_in "Password", :with => ""
-        click_button
+        user = User.new(:email => "", :password => "")
+        integration_sign_in user
         response.should have_selector("div.flash.error", :content => "invalid")
       end
     end
@@ -52,14 +51,11 @@ describe "Users" do
     describe "le succès" do
       it "devrait identifier un utilisateur puis le déconnecter" do
         user = Factory(:user)
-        visit signin_path
-        fill_in "Email",    :with => user.email
-        fill_in "Password", :with => user.password
-        click_button
+        integration_sign_in user
         controller.should be_signed_in
         click_link "Déconnexion"
         controller.should_not be_signed_in
       end
     end
-  
+  end
 end
